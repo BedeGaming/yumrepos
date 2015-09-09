@@ -44,8 +44,9 @@ class yumrepos
   # flag so keys are automatically accepted anyway
 
   file { $yumdir:
-    ensure => directory,
-    purge  => $purge,
+    ensure   => directory,
+    purge    => $purge,
+    recurese => true,
   }
 
   file { $keydir:
