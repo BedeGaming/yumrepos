@@ -7,6 +7,7 @@ class yumrepos
   $hiera_hash = $yumrepos::params::hiera_hash,
   $purge      = $yumrepos::params::purge,
   $keysource  = $yumrepos::params::keysource,
+  $yumdir     = $yumrepos::params::yumdir,
   $keydir     = $yumrepos::params::keydir
 ) inherits yumrepos::params {
 
@@ -42,14 +43,19 @@ class yumrepos
   # No import exec is performed as the puppet yum proivder runs with the '-y'
   # flag so keys are automatically accepted anyway
 
+  file { $yumdir:
+    ensure => directory,
+    purge  => $purge,
+  }
+
   file { $keydir:
-  ensure  => directory,
-  purge   => $purge,
-  recurse => true,
-  force   => true,
-  owner   => 'root',
-  group   => 'root',
-  source  => $keysource
+    ensure  => directory,
+    purge   => $purge,
+    recurse => true,
+    force   => true,
+    owner   => 'root',
+    group   => 'root',
+    source  => $keysource
   }
 
 }
