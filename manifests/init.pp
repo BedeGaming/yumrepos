@@ -46,7 +46,7 @@ class yumrepos
   file { $yumdir:
     ensure   => directory,
     purge    => $purge,
-    recurese => true,
+    recurse  => true,
   }
 
   file { $keydir:
