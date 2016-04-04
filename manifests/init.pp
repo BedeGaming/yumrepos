@@ -56,8 +56,16 @@ class yumrepos
     force   => true,
     owner   => 'root',
     group   => 'root',
-    source  => $keysource
+    source  => $keysource,
+    notify  => Exec['yumrepos_import_keys']
   }
+
+  exec {'yumrepos_import_keys':
+    path        => ['/bin','/usr/bin'],
+    command     => 'rpm --import /etc/pki/rpm-gpg/*',
+    refreshonly => true
+  }
+
 
 }
 
