@@ -7,6 +7,7 @@ class yumrepos
   $hiera_hash = $yumrepos::params::hiera_hash,
   $purge      = $yumrepos::params::purge,
   $keysource  = $yumrepos::params::keysource,
+  $keypurge   = $yumrepos::params::keypurge,
   $yumdir     = $yumrepos::params::yumdir,
   $keydir     = $yumrepos::params::keydir
 ) inherits yumrepos::params {
@@ -51,7 +52,7 @@ class yumrepos
 
   file { $keydir:
     ensure  => directory,
-    purge   => $purge,
+    purge   => $keypurge,
     recurse => true,
     force   => true,
     owner   => 'root',
