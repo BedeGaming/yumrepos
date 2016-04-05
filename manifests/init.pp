@@ -37,7 +37,8 @@ class yumrepos
   create_resources(yumrepo, $yumrepos, $defaults)
 
   resources { 'yumrepo':
-    purge => $purge,
+    purge   => $purge,
+    notifiy => Exec['yumrepos_refresh_cache']
   }
 
   # Ensure keys are present
@@ -48,6 +49,12 @@ class yumrepos
     ensure   => directory,
     purge    => $purge,
     recurse  => true,
+  }
+
+  exec {'yumrepos_refresh_cache':
+    path        => ['/bin','/usr/bin'],
+    command     => 'yum clean all',
+    refreshonly => true,
   }
 
   file { $keydir:
