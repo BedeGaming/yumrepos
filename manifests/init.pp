@@ -38,7 +38,6 @@ class yumrepos
 
   resources { 'yumrepo':
     purge   => $purge,
-    notifiy => Exec['yumrepos_refresh_cache']
   }
 
   # Ensure keys are present
@@ -49,6 +48,7 @@ class yumrepos
     ensure   => directory,
     purge    => $purge,
     recurse  => true,
+    notify => Exec['yumrepos_refresh_cache']
   }
 
   exec {'yumrepos_refresh_cache':
